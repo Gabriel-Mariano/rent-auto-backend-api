@@ -4,6 +4,7 @@ import multerConfig from './config/multer';
 import AutoController from './controllers/autoController';
 
 import BrandController from './controllers/brandController';
+import ScheduleModel from './controllers/scheduleController';
 import UserController from './controllers/userController';
 
 const route = express.Router();
@@ -22,6 +23,9 @@ route.get('/automotivebrands/', BrandController.index);
 route.post('/create/automotivebrand',BrandController.create);
 route.put('/update/automotivebrand',BrandController.update);
 route.delete('/delete/automotivebrand/:id',BrandController.delete);
+
+route.get('/bookings/calendar/:autoId',ScheduleModel.indexById);
+route.post('/bookings/calendar/:autoId',ScheduleModel.create);
 
 
 export default route;

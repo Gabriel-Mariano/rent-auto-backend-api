@@ -21,6 +21,7 @@ model User {
   cep       String?  @db.Char(8)
   phone     String?  @db.Char(8)
   cellPhone String?  @db.Char(9)
+  users     Schedule[]
 }
 
 model Automobile {
@@ -28,7 +29,7 @@ model Automobile {
   name         String    @db.VarChar(100)
   describe     String?   @db.VarChar(255)
   photo        String?
-  year         DateTime? 
+  year         DateTime? @db.Date
   price        Float?
   fuel         String   
   exchange     Exchange  @default(Manual)
@@ -40,6 +41,7 @@ model Automobile {
   brandId      Int?  
   carModel     CarModel? @relation(fields: [carModelId], references: [id])
   carModelId   Int?
+  automobiles  Schedule[]
 }
 
 enum Exchange {
@@ -57,4 +59,16 @@ model CarModel {
   id            Int @id @default(autoincrement())
   model         String
   automobiles   Automobile[]
+}
+
+model Schedule {
+  user          User?   @relation(fields: [userId], references: [id])
+  userId        Int
+  auto          Automobile?   @relation(fields: [autoId], references: [id])
+  autoId        Int 
+  start_date    DateTime @db.Date 
+  end_date      DateTime @db.Date
+  price         Decimal @db.Decimal(9,2)
+  
+  @@id([userId, autoId])
 }
